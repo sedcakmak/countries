@@ -1,5 +1,6 @@
 import "./App.css";
 import { useState, createContext } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import styled from "styled-components";
 import { lightTheme, darkTheme } from "./globalStyles";
 import { ThemeProvider } from "styled-components";
@@ -8,6 +9,7 @@ import Navbar from "./components/Navbar";
 import SearchBar from "./components/SearchBar";
 import Cards from "./components/Cards";
 import Dropdown from "./components/Dropdown";
+import CountryPage from "./components/CountryPage";
 
 export const ThemeContext = createContext();
 
@@ -27,54 +29,63 @@ function App() {
     }
   };
 
-  function openCountry() {
-    console.log("working");
-  }
-
   return (
-    <ThemeContext.Provider
-      value={{
-        theme,
-        countries,
-        setCountries,
-        filterCountry,
-        setFilterCountry,
-        region,
-        setRegion,
-      }}
-    >
-      <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
-        <GlobalStyle />
-        <Navbar
-          toggleTheme={toggleTheme}
-          theme={theme}
-        />
-        <Section>
-          <SearchBar
-            countries={countries}
-            setCountries={setCountries}
-            filterCountry={filterCountry}
-            setFilterCountry={setFilterCountry}
+    <BrowserRouter>
+      <ThemeContext.Provider
+        value={{
+          theme,
+          countries,
+          setCountries,
+          filterCountry,
+          setFilterCountry,
+          region,
+          setRegion,
+        }}
+      >
+        <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
+          <GlobalStyle />
+          <Navbar
+            toggleTheme={toggleTheme}
             theme={theme}
           />
-          <Dropdown
-            theme={theme}
-            countries={countries}
-            region={region}
-            setRegion={setRegion}
-          />
-        </Section>
-        <Div>
-          <Cards
-            theme={theme}
-            countries={countries}
-            setCountries={setCountries}
-            filterCountry={filterCountry}
-            region={region}
-          />
-        </Div>
-      </ThemeProvider>
-    </ThemeContext.Provider>
+          <Section>
+            <SearchBar
+              countries={countries}
+              setCountries={setCountries}
+              filterCountry={filterCountry}
+              setFilterCountry={setFilterCountry}
+              theme={theme}
+            />
+            <Dropdown
+              theme={theme}
+              countries={countries}
+              region={region}
+              setRegion={setRegion}
+            />
+          </Section>
+          <Div>
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <Cards
+                    theme={theme}
+                    countries={countries}
+                    setCountries={setCountries}
+                    filterCountry={filterCountry}
+                    region={region}
+                  />
+                }
+              />
+              <Route
+                path="/:name"
+                element={<CountryPage countries={countries} />}
+              />
+            </Routes>
+          </Div>
+        </ThemeProvider>
+      </ThemeContext.Provider>
+    </BrowserRouter>
   );
 }
 

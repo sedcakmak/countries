@@ -1,11 +1,14 @@
 import axios from "axios";
 import { useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { ThemeContext } from "../App";
 
 export default function Cards() {
   const { theme, countries, setCountries, filterCountry, region } =
     useContext(ThemeContext);
+
+  let navigate = useNavigate();
 
   const Div = styled.div`
     background: ${() => (theme === "light" ? "#FFF" : "hsl(209, 23%, 22%)")};
@@ -37,7 +40,7 @@ export default function Cards() {
   useEffect(() => {
     getAllCountries();
   }, []);
-
+  console.log(countries);
   if (!region && !filterCountry && countries.length > 0) {
     return countries
       .sort((a, b) => (a.name.common > b.name.common ? 1 : -1))
@@ -45,11 +48,11 @@ export default function Cards() {
         return (
           <Div
             key={country.name.common}
-            onClick={() => alert("working")}
+            onClick={() => navigate(`${country.name.common}`)}
           >
             <img
               src={country.flags.png}
-              alt="flag"
+              alt={country.flags.alt}
             />
             <Div2>
               <H1>{country.name.common}</H1>
@@ -69,10 +72,13 @@ export default function Cards() {
       });
   } else if (region) {
     return region.map((country) => (
-      <Div key={country.name.official}>
+      <Div
+        key={country.name.official}
+        onClick={() => navigate(`${country.name.common}`)}
+      >
         <img
           src={country.flags.png}
-          alt="flag"
+          alt={country.flags.alt}
         />
         <Div2>
           <H1>{country.name.common}</H1>
@@ -91,10 +97,13 @@ export default function Cards() {
     ));
   } else if (filterCountry)
     return filterCountry.map((country) => (
-      <Div key={country.name.official}>
+      <Div
+        key={country.name}
+        onClick={() => navigate(`${country.name.common}`)}
+      >
         <img
           src={country.flags.png}
-          alt="flag"
+          alt={country.flags.alt}
         />
         <Div2>
           <H1>{country.name.common}</H1>
