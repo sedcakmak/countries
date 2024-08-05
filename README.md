@@ -24,7 +24,7 @@ Users should be able to:
 - Filter the countries according to region
 - Switch the light or dark mode of the website
 - View the optimal layout for the site depending on their device's screen size
-- 
+  
 ### Screenshot
 
 ![](./screenshot.png)
