@@ -40,15 +40,15 @@ export default function Cards() {
   useEffect(() => {
     getAllCountries();
   }, []);
-  console.log(countries);
   if (!region && !filterCountry && countries.length > 0) {
+    console.log(countries);
     return countries
       .sort((a, b) => (a.name.common > b.name.common ? 1 : -1))
       .map((country) => {
         return (
           <Div
             key={country.name.common}
-            onClick={() => navigate(`${country.name.common}`)}
+            onClick={() => navigate(`${country.altSpellings[0]}`)}
           >
             <img
               src={country.flags.png}
@@ -74,7 +74,7 @@ export default function Cards() {
     return region.map((country) => (
       <Div
         key={country.name.official}
-        onClick={() => navigate(`${country.name.common}`)}
+        onClick={() => navigate(`${country.altSpellings[0]}`)}
       >
         <img
           src={country.flags.png}
@@ -99,7 +99,7 @@ export default function Cards() {
     return filterCountry.map((country) => (
       <Div
         key={country.name}
-        onClick={() => navigate(`${country.name.common}`)}
+        onClick={() => navigate(`${country.altSpellings[0]}`)}
       >
         <img
           src={country.flags.png}

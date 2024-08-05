@@ -30,40 +30,40 @@ function App() {
   };
 
   return (
-    <BrowserRouter>
-      <ThemeContext.Provider
-        value={{
-          theme,
-          countries,
-          setCountries,
-          filterCountry,
-          setFilterCountry,
-          region,
-          setRegion,
-        }}
-      >
-        <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
-          <GlobalStyle />
-          <Navbar
-            toggleTheme={toggleTheme}
+    <ThemeContext.Provider
+      value={{
+        theme,
+        countries,
+        setCountries,
+        filterCountry,
+        setFilterCountry,
+        region,
+        setRegion,
+      }}
+    >
+      <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
+        <GlobalStyle />
+        <Navbar
+          toggleTheme={toggleTheme}
+          theme={theme}
+        />
+        <Section>
+          <SearchBar
+            countries={countries}
+            setCountries={setCountries}
+            filterCountry={filterCountry}
+            setFilterCountry={setFilterCountry}
             theme={theme}
           />
-          <Section>
-            <SearchBar
-              countries={countries}
-              setCountries={setCountries}
-              filterCountry={filterCountry}
-              setFilterCountry={setFilterCountry}
-              theme={theme}
-            />
-            <Dropdown
-              theme={theme}
-              countries={countries}
-              region={region}
-              setRegion={setRegion}
-            />
-          </Section>
-          <Div>
+          <Dropdown
+            theme={theme}
+            countries={countries}
+            region={region}
+            setRegion={setRegion}
+          />
+        </Section>
+        <Div>
+          <BrowserRouter>
             <Routes>
               <Route
                 path="/"
@@ -82,10 +82,10 @@ function App() {
                 element={<CountryPage countries={countries} />}
               />
             </Routes>
-          </Div>
-        </ThemeProvider>
-      </ThemeContext.Provider>
-    </BrowserRouter>
+          </BrowserRouter>
+        </Div>
+      </ThemeProvider>
+    </ThemeContext.Provider>
   );
 }
 
